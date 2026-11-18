@@ -104,6 +104,29 @@
 
   // ---------------------------------------------------------------- éléments graphiques
   E.dot = (ctx, x, y, r, c) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, 6.2832); ctx.fill(); };
+  // Point flou bon marché (dégradé radial, sans filtre canvas) : hex, alpha, flou en px
+  E.softDot = function (ctx, x, y, r, hex, a, b = 0) {
+    if (a <= 0.002 || r <= 0) return;
+    if (b < 0.3) return E.dot(ctx, x, y, r, E.rgba(hex, a));
+    const R = r + b * 1.6, g = ctx.createRadialGradient(x, y, 0, x, y, R);
+    const k = r * r / (R * R); // conserve à peu près l'énergie lumineuse
+    g.addColorStop(0, E.rgba(hex, a * Math.min(1, 0.35 + k * 1.3))); g.addColorStop(E.clamp((r - b * 0.6) / R, 0, 0.9), E.rgba(hex, a * Math.min(1, k * 1.3 + 0.12))); g.addColorStop(1, E.rgba(hex, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 6.2832); ctx.fill();
+  };
+  // Calque : dessine fn dans un tampon puis le compose UNE fois avec flou et opacité
+  const POOL = [];
+  let depth = 0;
+  E.layer = function (ctx, blur, alpha, fn) {
+    if (alpha <= 0.002) return;
+    if (blur < 0.05 && alpha >= 0.999) { ctx.save(); fn(ctx); ctx.restore(); return; }
+    const cv = ctx.canvas;
+    if (!POOL[depth]) POOL[depth] = document.createElement('canvas');
+    const oc = POOL[depth]; if (oc.width !== cv.width || oc.height !== cv.height) { oc.width = cv.width; oc.height = cv.height; }
+    const o = oc.getContext('2d'); o.setTransform(1, 0, 0, 1, 0, 0); o.clearRect(0, 0, oc.width, oc.height);
+    o.setTransform(ctx.getTransform()); o.filter = 'none'; o.globalAlpha = 1;
+    depth++; o.save(); fn(o); o.restore(); depth--;
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = alpha; ctx.filter = E.blur(blur); ctx.drawImage(oc, 0, 0); ctx.restore();
+  };
 
   // La pépite : noyau chaud + halo. k = intensité (0..1.5)
   E.pepite = function (ctx, X, x, y, r, k = 1) {
@@ -162,7 +185,7 @@
   E.dust = function (ctx, X, cam = { cx: W / 2, cy: H / 2, s: 1 }, k = 1) {
     const { S } = X;
     for (let layer = 0; layer < 3; layer++) {
-      ctx.save(); ctx.filter = E.blur([2.6, 1.2, 0][layer]);
+      ctx.save(); const bl = [2.6, 1.2, 0][layer];
       for (let i = layer; i < DUST.length; i += 3) {
         const d = DUST[i], par = 0.25 + layer * 0.3;
         let x = d.x + X.t * (4 + layer * 5) - (cam.cx - W / 2) * par, y = d.y - X.t * (1.5 + layer) - (cam.cy - H / 2) * par;
@@ -170,7 +193,7 @@
         const sc = 1 + (cam.s - 1) * par;
         x = (x - W / 2) * sc + W / 2; y = (y - H / 2) * sc + H / 2;
         const a = (0.05 + 0.08 * layer) * (0.6 + 0.4 * Math.sin(X.t * 0.8 + d.ph)) * k;
-        E.dot(ctx, x, y, d.s * (0.8 + layer * 0.35) * sc, E.rgba(S.line, a));
+        E.softDot(ctx, x, y, d.s * (0.8 + layer * 0.35) * sc, S.line, a, bl * sc);
       }
       ctx.restore();
     }
@@ -181,15 +204,15 @@
     if (!GRAIN) {
       GRAIN = [];
       for (let k = 0; k < 6; k++) {
-        const c = document.createElement('canvas'); c.width = 960; c.height = 540;
-        const g = c.getContext('2d'), id = g.createImageData(960, 540), r = E.rng(1000 + k);
+        const c = document.createElement('canvas'); c.width = W; c.height = H;
+        const g = c.getContext('2d'), id = g.createImageData(W, H), r = E.rng(1000 + k);
         for (let i = 0; i < id.data.length; i += 4) { const v = 128 + (r() - 0.5) * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
         g.putImageData(id, 0, 0); GRAIN.push(c);
       }
     }
     const fi = Math.round(X.t * X.fps) % 6;
     ctx.save(); ctx.globalAlpha = X.S.grain * 3; ctx.globalCompositeOperation = 'overlay';
-    ctx.drawImage(GRAIN[fi], 0, 0, W, H); ctx.restore();
+    ctx.drawImage(GRAIN[fi], 0, 0); ctx.restore();
   };
 
   E.vignette = function (ctx, X) {

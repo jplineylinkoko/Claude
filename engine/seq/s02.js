@@ -53,26 +53,25 @@
     // ---- contenu gauche : Formalisée (désaturé, gris froid)
     const coldInk = dark ? '#8C9BAE' : '#7D8794';
     if (!o.tail) {
-      ctx.save();
-      ctx.globalAlpha = 1 - fadeL; ctx.filter = E.blur(5 * fadeL * c.s);
+      E.layer(ctx, 5 * fadeL * c.s, 1 - fadeL, ctx => {
       // pile de documents (secondaire, flou de profondeur)
       const ds = E.spring(lt, X.cue('leftItems') + X.beat * 0.5, { zeta: 0.72, freq: 1.1 });
-      if (ds > 0) for (let i = 0; i < 4; i++) {
+      if (ds > 0) E.layer(ctx, 2.5 * c.s, E.clamp(ds * 1.5), ctx => { for (let i = 0; i < 4; i++) {
         const x = 560 + i * 26, y = 330 + i * 22 + (1 - ds) * 120;
-        ctx.save(); ctx.globalAlpha *= E.clamp(ds * 1.5); ctx.filter = E.blur(2.5 + 5 * fadeL * c.s); ctx.translate(x, y); ctx.rotate(-0.06 + i * 0.035);
+        ctx.save(); ctx.translate(x, y); ctx.rotate(-0.06 + i * 0.035);
         ctx.fillStyle = dark ? '#20344F' : '#F7F8FA'; ctx.shadowColor = S.shadow; ctx.shadowBlur = E.sb(30); ctx.shadowOffsetY = 10 * E.px;
         ctx.fillRect(0, 0, 230, 300); ctx.shadowColor = 'transparent';
         ctx.fillStyle = E.rgba(S.cold, 0.32);
         for (let l = 0; l < 9; l++) ctx.fillRect(26, 40 + l * 26, l % 3 === 2 ? 110 : 178, 7);
         ctx.restore();
-      }
+      } });
       E.text(ctx, lt, L.s2_formal, { x: E.MX, y: 300, valign: 'bottom', size: 88, minSize: 48, weight: 600, maxW: 700, maxLines: 1, color: coldInk, track: -0.017, tIn: X.cue('left') });
       [['doc', L.s2_f1], ['report', L.s2_f2], ['proc', L.s2_f3]].forEach(([ic, lab], i) => {
         const y = 420 + i * 86, ti = X.cue('leftItems') + i * 0.07;
         E.icon(ctx, ic, E.MX, y - 26, 34, coldInk, E.prog(lt, ti, 0.7, ease.cubicOut));
         E.text(ctx, lt, lab, { x: E.MX + 58, y, valign: 'bottom', size: 32, minSize: 20, weight: 400, maxW: 340, maxLines: 1, color: coldInk, tIn: ti });
       });
-      ctx.restore();
+      });
     }
 
     // ---- côté tacite
@@ -90,9 +89,7 @@
       ORB.forEach((q, i) => {
         const a = E.prog(lt, X.cue('right') + q.delay, 1.0, ease.cubicOut); if (a <= 0) return;
         const ang = q.a + lt * q.w * (200 / q.d), x = PR[0] + Math.cos(ang) * q.d, y = PR[1] + Math.sin(ang) * q.d * 0.92;
-        ctx.save(); if (q.far) ctx.filter = E.blur(2 * c.s);
-        E.dot(ctx, x, y, q.s, q.amber ? E.rgba(B.amber, 0.8 * a) : E.rgba(q.cyan ? B.cyan : B.teal, (q.far ? 0.35 : 0.7) * a));
-        ctx.restore();
+        E.softDot(ctx, x, y, q.s, q.amber ? B.amber : q.cyan ? B.cyan : B.teal, (q.amber ? 0.8 : q.far ? 0.35 : 0.7) * a, q.far ? 2 : 0);
       });
       E.text(ctx, lt, L.s2_tacit, { x: RX, y: 300, valign: 'bottom', size: 96, minSize: 52, weight: 700, maxW: 640, maxLines: 1, color: S.ink, track: -0.02, tIn: X.cue('right'), tOut: rOut });
       [['branch', L.s2_t1], ['hand', L.s2_t2], ['alert', L.s2_t3]].forEach(([ic, lab], i) => {

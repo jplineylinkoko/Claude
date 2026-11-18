@@ -2,7 +2,7 @@
 
 Ce projet produit une vidéo de 3:00 en 1920×1080 et 60 i/s, peinte image par image par du code. Il ne contient aucune donnée réelle : tous les textes spécifiques sont des variables `{{...}}`.
 
-> État actuel : **étape 2**. Le moteur et les séquences 1 et 2 sont terminés. Les séquences 3 à 10 sont des gabarits provisoires.
+> État actuel : **étape 2** — moteur + séquences 1 et 2 terminés ; séquences 3 à 10 en gabarit. Aperçus : `previews/`. Rendu complet estimé ≈ 30 min (3 processus).
 
 ## Prérequis (une fois)
 - Node.js 18 ou plus, et ffmpeg dans le PATH.

@@ -3,17 +3,87 @@
   "bpm": 100,
   "fps": 60,
   "sequences": [
-    { "id": 1, "name": "Pourquoi agir ?", "dur": 15,
-      "cues": { "silhouette": 0, "birth": 1, "radiate": 3, "labels": 5.5, "watermark": 8, "recede": 12, "labelsOut": 15.5, "qA": 16, "qB": 19.5 } },
-    { "id": 2, "name": "Deux types de connaissance", "dur": 12,
-      "cues": { "gather": 0, "split": 2, "left": 4, "leftItems": 5, "right": 6, "rightItems": 7, "threads": 7.5, "fadeLeft": 9, "rightOut": 10.5, "zoom": 10, "message": 13 } },
-    { "id": 3, "name": "Identifier la connaissance critique", "dur": 20, "cues": {} },
-    { "id": 4, "name": "Faire expliciter ce qui a de la valeur", "dur": 25, "cues": {} },
-    { "id": 5, "name": "Transformer la parole en contenus", "dur": 18, "cues": {} },
-    { "id": 6, "name": "Une architecture pensée pour retrouver", "dur": 20, "cues": {} },
-    { "id": 7, "name": "Un parcours qui part d'une vraie question", "dur": 33, "cues": {} },
-    { "id": 8, "name": "Ce qu'en disent les utilisateurs", "dur": 12, "cues": {} },
-    { "id": 9, "name": "Les conditions pour que ça dure", "dur": 12, "cues": {} },
-    { "id": 10, "name": "Passer à l'échelle", "dur": 13, "cues": {} }
+    {
+      "id": 1,
+      "name": "Pourquoi agir ?",
+      "dur": 15,
+      "cues": {
+        "silhouette": 0,
+        "birth": 1,
+        "radiate": 3,
+        "labels": 5.5,
+        "watermark": 8,
+        "recede": 12,
+        "labelsOut": 15.5,
+        "qA": 16,
+        "qB": 19.5
+      }
+    },
+    {
+      "id": 2,
+      "name": "Deux types de connaissance",
+      "dur": 12,
+      "cues": {
+        "gather": 0,
+        "split": 2,
+        "left": 4,
+        "leftItems": 5,
+        "right": 6,
+        "rightItems": 7,
+        "threads": 7.5,
+        "fadeLeft": 9,
+        "rightOut": 10.5,
+        "zoom": 10,
+        "message": 12
+      }
+    },
+    {
+      "id": 3,
+      "name": "Identifier la connaissance critique",
+      "dur": 20,
+      "cues": {}
+    },
+    {
+      "id": 4,
+      "name": "Faire expliciter ce qui a de la valeur",
+      "dur": 25,
+      "cues": {}
+    },
+    {
+      "id": 5,
+      "name": "Transformer la parole en contenus",
+      "dur": 18,
+      "cues": {}
+    },
+    {
+      "id": 6,
+      "name": "Une architecture pensée pour retrouver",
+      "dur": 20,
+      "cues": {}
+    },
+    {
+      "id": 7,
+      "name": "Un parcours qui part d'une vraie question",
+      "dur": 33,
+      "cues": {}
+    },
+    {
+      "id": 8,
+      "name": "Ce qu'en disent les utilisateurs",
+      "dur": 12,
+      "cues": {}
+    },
+    {
+      "id": 9,
+      "name": "Les conditions pour que ça dure",
+      "dur": 12,
+      "cues": {}
+    },
+    {
+      "id": 10,
+      "name": "Passer à l'échelle",
+      "dur": 13,
+      "cues": {}
+    }
   ]
 }

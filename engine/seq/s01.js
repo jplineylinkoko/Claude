@@ -68,23 +68,22 @@
 
     // filigranes (plan arrière, flou, parallaxe opposée au recul)
     const wm = [[L.s1_w1, E.MX - 6, 240, 120], [L.s1_w3, 960, 190, 104], [L.s1_w2, 1090, 836, 120]];
-    if (!o.tail) wm.forEach(([w, x, y, fs], i) => {
+    if (!o.tail) E.layer(ctx, 1.6, 1, c2 => wm.forEach(([w, x, y, fs], i) => {
       const a = E.prog(lt, X.cue('watermark') + i * X.beat, 1.4, ease.cubicOut) * (1 - E.prog(lt, X.cue('labelsOut') + i * 0.08, 1.0, ease.cubicInOut));
       if (a <= 0) return;
-      ctx.save(); ctx.filter = E.blur(1.6); ctx.globalAlpha = a * 0.055;
-      const ff = E.fit(ctx, w, { weight: 800, size: fs, minSize: 60, maxW: W - E.MX - x, maxLines: 1 });
-      ctx.font = E.font(800, ff.size); ctx.letterSpacing = '-3px'; ctx.fillStyle = S.ink;
-      ctx.fillText(w, x + (lt * 6) * (i % 2 ? -1 : 1) - g.p * 40 * (i - 1), y + g.p * 18);
-      ctx.restore();
-    });
+      c2.save(); c2.globalAlpha = a * 0.055;
+      const ff = E.fit(c2, w, { weight: 800, size: fs, minSize: 60, maxW: W - E.MX - x, maxLines: 1 });
+      c2.font = E.font(800, ff.size); c2.letterSpacing = '-3px'; c2.fillStyle = S.ink;
+      c2.fillText(w, x + (lt * 6) * (i % 2 ? -1 : 1) - g.p * 40 * (i - 1), y + g.p * 18);
+      c2.restore();
+    }));
 
     // silhouette (groupe en recul, flou de profondeur)
     const sa = (1 - 0.62 * g.p) * (o.tail ? 1 - E.prog(lt, X.dur, 1.0, ease.cubicInOut) : 1);
-    ctx.save();
-    ctx.filter = E.blur(2.2 * g.p);
-    ctx.translate(ANCHOR[0], ANCHOR[1]); ctx.scale(g.s, g.s); ctx.translate(-ANCHOR[0], -ANCHOR[1]);
-    silhouette(ctx, lt, X, sa);
-    ctx.restore();
+    E.layer(ctx, 2.2 * g.p, 1, c2 => {
+      c2.translate(ANCHOR[0], ANCHOR[1]); c2.scale(g.s, g.s); c2.translate(-ANCHOR[0], -ANCHOR[1]);
+      silhouette(c2, lt, X, sa);
+    });
 
     if (!o.tail) {
       // pépite dans la tête : naît, puis se vide en éclats
@@ -116,8 +115,8 @@
     }
 
     // question en deux temps : centrée, ancrée au-dessus de la bande sous-titres
-    E.text(ctx, lt, L.s1_qA, { x: W / 2, y: 790, align: 'center', valign: 'bottom', size: 60, minSize: 34, weight: 500, maxW: 1500, maxLines: 2, color: S.inkSoft, tIn: X.cue('qA'), tOut: X.cue('qB') - X.beat, stagger: 0.06 });
-    E.text(ctx, lt, L.s1_qB, { x: W / 2, y: 790, align: 'center', valign: 'bottom', size: 72, minSize: 38, weight: 700, maxW: 1400, maxLines: 2, color: S.ink, tIn: X.cue('qB'), tOut: X.dur, stagger: 0.06 });
+    E.text(ctx, lt, L.s1_qA, { x: W / 2, y: 790, align: 'center', valign: 'bottom', size: 64, minSize: 34, weight: 500, maxW: 1500, maxLines: 2, color: S.inkSoft, tIn: X.cue('qA'), tOut: X.cue('qB') - X.beat, stagger: 0.06 });
+    E.text(ctx, lt, L.s1_qB, { x: W / 2, y: 790, align: 'center', valign: 'bottom', size: 84, minSize: 40, weight: 700, maxW: 1500, maxLines: 2, color: S.ink, tIn: X.cue('qB'), tOut: X.dur, stagger: 0.06 });
   }
 
   E.defineSeq(1, { defaultDur: 15, tail: 1.4, draw });
