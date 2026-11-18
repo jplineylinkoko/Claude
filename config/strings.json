@@ -1,0 +1,41 @@
+{
+  "_comment": "Textes fixes du film (hors variables {{...}}). 12 mots maximum à l'écran à tout instant. Les {{VARIABLES}} sont remplacées depuis texts.json.",
+  "en": {
+    "s1_knowledge": "Knowledge",
+    "s1_knowhow": "Know-how",
+    "s1_w1": "Retirement",
+    "s1_w2": "Mobility",
+    "s1_w3": "Reorganization",
+    "s1_qA": "When an expert leaves the lab,",
+    "s1_qB": "how do we preserve years of knowledge and expertise?",
+    "s2_formal": "Explicit",
+    "s2_f1": "Specifications",
+    "s2_f2": "Reports",
+    "s2_f3": "Procedures",
+    "s2_tacit": "Tacit",
+    "s2_t1": "Reasoning",
+    "s2_t2": "Tricks of the trade",
+    "s2_t3": "Mistakes to avoid",
+    "s2_msgA": "Our focus:",
+    "s2_msgB": "tacit knowledge."
+  },
+  "fr": {
+    "s1_knowledge": "Savoirs",
+    "s1_knowhow": "Savoir-faire",
+    "s1_w1": "Retraite",
+    "s1_w2": "Mobilité",
+    "s1_w3": "Réorganisation",
+    "s1_qA": "Quand un expert quitte son laboratoire,",
+    "s1_qB": "comment préserver des années de savoirs et d'expertise ?",
+    "s2_formal": "Formalisée",
+    "s2_f1": "Spécifications",
+    "s2_f2": "Rapports",
+    "s2_f3": "Procédures",
+    "s2_tacit": "Tacite",
+    "s2_t1": "Raisonnements",
+    "s2_t2": "Tours de main",
+    "s2_t3": "Erreurs à éviter",
+    "s2_msgA": "Notre focus :",
+    "s2_msgB": "la connaissance tacite."
+  }
+}

@@ -2,3 +2,4 @@ node_modules/
 render/
 styleframes/out/
 *.tmp
+tests/*.png
