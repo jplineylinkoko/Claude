@@ -1,0 +1,49 @@
+{
+  "_comment": "Toutes les couleurs du film. Les 5 couleurs de marque sont fixes ; chaque style définit ses neutres. L'ambre est réservé à la pépite et aux points clés.",
+  "brand": {
+    "night": "#0B2E59",
+    "blue": "#005EB8",
+    "cyan": "#00A6E8",
+    "teal": "#2E9C98",
+    "amber": "#E8A317"
+  },
+  "styles": {
+    "A_clair": {
+      "label": "A — Clair chaud",
+      "mode": "light",
+      "bg": "#F5F1EA",
+      "bgDeep": "#ECE5D9",
+      "surface": "#FFFFFF",
+      "ink": "#0B2E59",
+      "inkSoft": "#3E5577",
+      "muted": "#8A94A3",
+      "cold": "#9AA3AE",
+      "line": "#0B2E59",
+      "lineAlpha": 0.16,
+      "shadow": "rgba(11,46,89,0.14)",
+      "grain": 0.035,
+      "glow": 0.85
+    },
+    "B_nuit": {
+      "label": "B — Bleu nuit profond",
+      "mode": "dark",
+      "bg": "#0B2E59",
+      "bgDeep": "#061A36",
+      "surface": "#123A6B",
+      "ink": "#F3F6FA",
+      "inkSoft": "#A9BEDA",
+      "muted": "#6F86A6",
+      "cold": "#7C8DA3",
+      "line": "#BFD3EC",
+      "lineAlpha": 0.18,
+      "shadow": "rgba(0,8,20,0.45)",
+      "grain": 0.05,
+      "glow": 1.0
+    }
+  },
+  "hybrid": {
+    "label": "C — Hybride",
+    "default": "A_clair",
+    "darkSequences": [2, 10]
+  }
+}
