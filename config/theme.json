@@ -1,5 +1,6 @@
 {
   "_comment": "Toutes les couleurs du film. Les 5 couleurs de marque sont fixes ; chaque style définit ses neutres. L'ambre est réservé à la pépite et aux points clés.",
+  "selected": "B_nuit",
   "brand": {
     "night": "#0B2E59",
     "blue": "#005EB8",
@@ -44,6 +45,9 @@
   "hybrid": {
     "label": "C — Hybride",
     "default": "A_clair",
-    "darkSequences": [2, 10]
+    "darkSequences": [
+      2,
+      10
+    ]
   }
 }
