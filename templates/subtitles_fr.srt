@@ -1,0 +1,94 @@
+1
+00:00:00,300 --> 00:00:07,450
+[Séq. 1 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+2
+00:00:07,550 --> 00:00:14,700
+[Séq. 1 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+3
+00:00:15,300 --> 00:00:20,950
+[Séq. 2 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+4
+00:00:21,050 --> 00:00:26,700
+[Séq. 2 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+5
+00:00:27,300 --> 00:00:36,950
+[Séq. 3 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+6
+00:00:37,050 --> 00:00:46,700
+[Séq. 3 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+7
+00:00:47,300 --> 00:00:53,099
+[Séq. 4 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+8
+00:00:53,199 --> 00:00:58,998
+[Séq. 4 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+9
+00:01:12,300 --> 00:01:20,950
+[Séq. 5 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+10
+00:01:21,050 --> 00:01:29,700
+[Séq. 5 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+11
+00:01:30,300 --> 00:01:39,950
+[Séq. 6 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+12
+00:01:40,050 --> 00:01:49,700
+[Séq. 6 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+13
+00:01:50,300 --> 00:02:06,450
+[Séq. 7 — sous-titre 1/2]
+{{PERSONA_QUESTION}}
+
+14
+00:02:06,550 --> 00:02:22,700
+[Séq. 7 — sous-titre 2/2]
+{{FOLLOW_UP_QUESTION}}
+
+15
+00:02:23,300 --> 00:02:28,800
+[Séq. 8 — sous-titre 1/1]
+[ligne 2, 42 caractères max]
+
+16
+00:02:35,300 --> 00:02:40,950
+[Séq. 9 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+17
+00:02:41,050 --> 00:02:46,700
+[Séq. 9 — sous-titre 2/2]
+[ligne 2, 42 caractères max]
+
+18
+00:02:47,300 --> 00:02:53,450
+[Séq. 10 — sous-titre 1/2]
+[ligne 2, 42 caractères max]
+
+19
+00:02:53,550 --> 00:02:59,700
+[Séq. 10 — sous-titre 2/2]
+[ligne 2, 42 caractères max]

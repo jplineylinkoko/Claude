@@ -6,7 +6,8 @@
 //   node tools/render.js --frames 3.5,12,20       PNG d'images isolées
 //   options : --lang en|fr  --placeholders on|off  --config <texts.json>
 //             --out <fichier>  --scale 0.5  --fps 60  --workers 3  --style B_nuit
-//             --audio <wav>  (muxé en AAC si fourni)
+//             --audio <wav>  (muxé en AAC ; le son des médias réels y est mixé, puis -16 LUFS)
+//             --media <media.json>  (par défaut config/media.json)
 const { chromium } = require('playwright');
 const { spawn, execFileSync } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
@@ -34,7 +35,29 @@ function loadConfig(o) {
   const theme = readJSON(path.join(ROOT, 'config/theme.json'));
   const timing = readJSON(path.join(ROOT, 'config/timing.json'));
   if (o.fps) timing.fps = parseFloat(o.fps);
-  return { texts, strings: stringsAll[o.lang], theme, timing, style: o.style, placeholders: o.placeholders === 'on', scale: o.scale };
+  const mediaPath = o.media ? path.resolve(o.media) : path.join(ROOT, 'config/media.json');
+  const mediaCfg = fs.existsSync(mediaPath) ? readJSON(mediaPath) : {};
+  return { texts, strings: stringsAll[o.lang], theme, timing, style: o.style, placeholders: o.placeholders === 'on', scale: o.scale, mediaCfg, mediaDir: path.dirname(mediaPath) };
+}
+
+// Prépare les médias réels : extraction des images des vidéos à la cadence du film
+function prepareMedia(cfg, schedule, tmp) {
+  const media = {}, audio = [];
+  for (const [slot, m] of Object.entries(cfg.mediaCfg)) {
+    if (slot.startsWith('_') || !m || !m.file) continue;
+    const file = path.resolve(cfg.mediaDir, m.file);
+    if (!fs.existsSync(file)) { console.warn(`Média introuvable pour ${slot} : ${file} (cadre vide utilisé)`); continue; }
+    const sch = schedule.find(s => s.slot === slot) || { start: 0, dur: 10 };
+    if (/\.(png|jpe?g|webp|gif)$/i.test(file)) { media[slot] = { kind: 'image', url: 'file://' + file, fit: m.fit || 'cover' }; continue; }
+    const dir = path.join(tmp, 'media_' + slot); fs.mkdirSync(dir, { recursive: true });
+    const fps = cfg.timing.fps;
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(m.start || 0), '-i', file, '-t', String(sch.dur + 0.5), '-vf', `fps=${fps},scale=1600:-2`, '-q:v', '2', path.join(dir, '%05d.jpg')]);
+    const count = fs.readdirSync(dir).length;
+    media[slot] = { kind: 'video', pattern: 'file://' + path.join(dir, '%05d.jpg'), count, fps, fit: m.fit || 'cover' };
+    if (m.audio) audio.push({ file, from: m.start || 0, at: sch.start, dur: sch.dur, gain: m.gain_db || 0 });
+    console.log(`Média ${slot} : ${count} images extraites`);
+  }
+  return { media, audio };
 }
 
 async function openPage(browser, cfg) {
@@ -52,7 +75,7 @@ async function renderSegment(browser, cfg, f0, f1, fps, file) {
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${w}x${h}`, '-r', String(fps), '-i', '-',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', file], { stdio: ['pipe', 'inherit', 'inherit'] });
   for (let f = f0; f < f1; f++) {
-    const b64 = await page.evaluate(t => { window.seek(t); return window.grab(); }, f / fps);
+    const b64 = await page.evaluate(async t => { window.seek(t); if (window.mediaPending()) { await window.mediaLoad(); window.seek(t); } return window.grab(); }, f / fps);
     if (!ff.stdin.write(Buffer.from(b64, 'base64'))) await new Promise(r => ff.stdin.once('drain', r));
   }
   ff.stdin.end();
@@ -62,17 +85,20 @@ async function renderSegment(browser, cfg, f0, f1, fps, file) {
 
 (async () => {
   const o = args(), cfg = loadConfig(o);
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ args: ['--allow-file-access-from-files', '--disable-web-security'] }); // images locales lisibles sans « canvas souillé »
   const t0 = Date.now();
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'km-'));
+  { const { page } = await openPage(browser, cfg); const sched = await page.evaluate(() => window.slotSchedule()); await page.close();
+    const pm = prepareMedia(cfg, sched, tmp); cfg.media = pm.media; cfg.slotAudio = pm.audio; }
   if (o.frames) {
     const dir = o.out || path.join(ROOT, 'render/frames'); fs.mkdirSync(dir, { recursive: true });
     const { page } = await openPage(browser, cfg);
     for (const t of o.frames) {
-      const data = await page.evaluate(t => { window.seek(t); return E.canvas.toDataURL('image/png'); }, t);
+      const data = await page.evaluate(async t => { window.seek(t); if (window.mediaPending()) { await window.mediaLoad(); window.seek(t); } return E.canvas.toDataURL('image/png'); }, t);
       const f = path.join(dir, `frame_${t.toFixed(2).padStart(7, '0')}.png`);
       fs.writeFileSync(f, Buffer.from(data.split(',')[1], 'base64')); console.log(f);
     }
-    await browser.close(); return;
+    await browser.close(); fs.rmSync(tmp, { recursive: true, force: true }); return;
   }
   const { page, info } = await openPage(browser, cfg); await page.close();
   const fps = info.fps;
@@ -80,7 +106,6 @@ async function renderSegment(browser, cfg, f0, f1, fps, file) {
   const F0 = Math.round(a * fps), F1 = Math.round(Math.min(b, info.total) * fps);
   const out = path.resolve(o.out || path.join(ROOT, `render/video_${o.lang}${cfg.placeholders ? '_placeholders' : ''}.mp4`));
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'km-'));
   const n = Math.max(1, Math.min(o.workers, Math.ceil((F1 - F0) / 60)));
   const per = Math.ceil((F1 - F0) / n), segs = [];
   console.log(`Rendu ${F1 - F0} images (${a}s → ${b}s) à ${fps} i/s, ${n} processus…`);
@@ -92,7 +117,20 @@ async function renderSegment(browser, cfg, f0, f1, fps, file) {
   fs.writeFileSync(path.join(tmp, 'list.txt'), segs.map(s => `file '${s}'`).join('\n'));
   const vid = o.audio ? path.join(tmp, 'video.mp4') : out;
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(tmp, 'list.txt'), '-c', 'copy', '-movflags', '+faststart', vid]);
-  if (o.audio) execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', vid, '-ss', String(a), '-i', path.resolve(o.audio), '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '256k', '-shortest', '-movflags', '+faststart', out]);
+  if (o.audio) {
+    // bande son + son des médias réels (décalés à leur place), puis normalisation -16 LUFS
+    const args = ['-y', '-loglevel', 'error', '-i', vid, '-ss', String(a), '-i', path.resolve(o.audio)];
+    const sa = (cfg.slotAudio || []).filter(c => c.at + c.dur > a && c.at < b);
+    sa.forEach(c => args.push('-ss', String(c.from), '-t', String(c.dur), '-i', c.file));
+    let filter = null;
+    if (sa.length) {
+      const parts = sa.map((c, i) => `[${i + 2}:a]aresample=48000,volume=${c.gain}dB,afade=t=in:d=0.15,afade=t=out:st=${Math.max(0, c.dur - 0.3)}:d=0.3,adelay=${Math.round(Math.max(0, c.at - a) * 1000)}:all=1[s${i}]`);
+      filter = parts.join(';') + `;[1:a]${sa.map((_, i) => `[s${i}]`).join('')}amix=inputs=${sa.length + 1}:normalize=0:duration=first,loudnorm=I=-16:TP=-1.5:LRA=11[aout]`;
+      args.push('-filter_complex', filter, '-map', '0:v', '-map', '[aout]');
+    } else args.push('-map', '0:v', '-map', '1:a');
+    args.push('-c:v', 'copy', '-c:a', 'aac', '-b:a', '256k', '-ar', '48000', '-shortest', '-movflags', '+faststart', out);
+    execFileSync('ffmpeg', args);
+  }
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`→ ${out}  (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
 })().catch(e => { console.error(e); process.exit(1); });

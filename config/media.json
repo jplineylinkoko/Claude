@@ -1,0 +1,31 @@
+{
+  "_comment": "Médias réels à insérer. 'file' = chemin (relatif à ce fichier) d'une vidéo (.mp4/.mov) ou d'une image (.png/.jpg). Vide = cadre abstrait (ou cadre étiqueté avec --placeholders on). 'start' = seconde de départ dans la vidéo source. 'audio' = mixer le son du clip dans la bande son. 'fit' = cover (remplit le cadre) ou contain (image entière).",
+  "INTERVIEW": {
+    "role": "Séq. 4 — extrait d'entretien, 12 s, 16:9",
+    "file": "",
+    "start": 0,
+    "audio": true,
+    "fit": "cover"
+  },
+  "VERBATIM": {
+    "role": "Séq. 8 — verbatim utilisateur, 6 s, 16:9",
+    "file": "",
+    "start": 0,
+    "audio": true,
+    "fit": "cover"
+  },
+  "SCREEN": {
+    "role": "Séq. 7 — capture (image ou vidéo) du vrai site, remplace la maquette ; 16:9 conseillé (1240×690)",
+    "file": "",
+    "start": 0,
+    "audio": false,
+    "fit": "cover"
+  },
+  "GUIDE": {
+    "role": "Séq. 9 — page du guide utilisateur (image), ~7 s",
+    "file": "",
+    "start": 0,
+    "audio": false,
+    "fit": "contain"
+  }
+}

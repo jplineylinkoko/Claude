@@ -1,5 +1,8 @@
+*.tmp
+deliverables/*.mp4
+deliverables/*.wav
 node_modules/
 render/
 styleframes/out/
-*.tmp
 tests/*.png
+tests/media/

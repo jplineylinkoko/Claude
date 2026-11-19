@@ -19,6 +19,8 @@
 <body>
 <canvas id="c"></canvas>
 <script src="core.js"></script>
+<script src="kit.js"></script>
+<script src="site.js"></script>
 <script src="seq/s01.js"></script>
 <script src="seq/s02.js"></script>
 <script src="seq/s03.js"></script>
@@ -46,6 +48,8 @@ window.boot = async function () {
   await E.logoReady;
   return { total: E.total, fps: E.fps, timeline: E.timeline.map(s => ({ id: s.id, start: s.start, dur: s.dur })) };
 };
+// Planning des emplacements médias : [{slot, start, dur}] en secondes absolues
+window.slotSchedule = () => E.timeline.flatMap((s, i) => { const d = E.seqs[s.id]; return d && d.slots ? d.slots(E.ctxFor(i, s.start)) : []; });
 // Lecture des pixels (RGBA brut, base64) pour l'encodage
 window.grab = function () {
   const c = E.canvas, d = E.ctx.getImageData(0, 0, c.width, c.height).data;

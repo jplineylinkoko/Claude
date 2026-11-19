@@ -1,0 +1,4 @@
+{ "INTERVIEW": {"file": "media/mire.mp4", "start": 1, "audio": true},
+  "VERBATIM": {"file": "media/mire.mp4", "start": 0, "audio": true},
+  "SCREEN": {"file": "media/capture.png"},
+  "GUIDE": {"file": "media/guide.png", "fit": "contain"} }

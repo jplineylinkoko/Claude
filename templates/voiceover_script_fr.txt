@@ -1,0 +1,70 @@
+# GABARIT DE VOIX OFF — 180 s — 150 mots/min
+# Remplacez les crochets par votre texte. Les {{VARIABLES}} reprennent config/texts.json.
+# Après enregistrement, reportez les durées réelles dans config/timing.json puis relancez templates.py.
+
+=== SÉQUENCE 01 — Pourquoi agir ? — 0:00.00 → 0:15.00
+Durée : 15.0 s   ·   Mots max (150 mots/min) : ≈ 33
+À l'écran : Savoirs · Savoir-faire · {{EXPERIENCE_LABEL}} · question en deux temps
+Texte de voix off :
+[VO 01 — à compléter]
+
+=== SÉQUENCE 02 — Deux types de connaissance — 0:15.00 → 0:27.00
+Durée : 12.0 s   ·   Mots max (150 mots/min) : ≈ 26
+À l'écran : Formalisée / Tacite · « Notre focus : la connaissance tacite. »
+Texte de voix off :
+[VO 02 — à compléter]
+
+=== SÉQUENCE 03 — Identifier la connaissance critique — 0:27.00 → 0:47.00
+Durée : 20.0 s   ·   Mots max (150 mots/min) : ≈ 46
+À l'écran : 2 difficultés · 3 faisceaux · {{DOMAIN_1}} / {{DOMAIN_2}}
+Variables utilisables : {{DOMAIN_1}} {{DOMAIN_2}}
+Texte de voix off :
+[VO 03 — à compléter]
+
+=== SÉQUENCE 04 — Faire expliciter ce qui a de la valeur — 0:47.00 → 1:12.00
+Durée : 25.0 s   ·   Mots max (150 mots/min) : ≈ 28
+À l'écran : Bulle barrée · guide d'entretien · EXTRAIT D'ENTRETIEN (12 s, son réel)
+Pas de voix off : 0:59.20 → 1:11.20
+Texte de voix off :
+[VO 04 — à compléter]
+
+=== SÉQUENCE 05 — Transformer la parole en contenus — 1:12.00 → 1:30.00
+Durée : 18.0 s   ·   Mots max (150 mots/min) : ≈ 41
+À l'écran : Relecture humaine · Récit d'expert · Playbook · {{DELIVERABLE_3}}
+Variables utilisables : {{DELIVERABLE_3}}
+Texte de voix off :
+[VO 05 — à compléter]
+
+=== SÉQUENCE 06 — Une architecture pensée pour retrouver — 1:30.00 → 1:50.00
+Durée : 20.0 s   ·   Mots max (150 mots/min) : ≈ 46
+À l'écran : Arborescence · Vues filtrées · Recherche · {{SITE_NAME}}
+Variables utilisables : {{SITE_NAME}}
+Texte de voix off :
+[VO 06 — à compléter]
+
+=== SÉQUENCE 07 — Un parcours qui part d'une vraie question — 1:50.00 → 2:23.00
+Durée : 33.0 s   ·   Mots max (150 mots/min) : ≈ 78
+À l'écran : {{PERSONA}} · {{PERSONA_QUESTION}} · {{PLAYBOOK_EXCERPT}} · {{FOLLOW_UP_QUESTION}} · {{KEY_FACT_SUMMARY}}
+Variables utilisables : {{PERSONA}} {{PERSONA_QUESTION}} {{FOLLOW_UP_QUESTION}}
+Texte de voix off :
+[VO 07 — à compléter]
+
+=== SÉQUENCE 08 — Ce qu'en disent les utilisateurs — 2:23.00 → 2:35.00
+Durée : 12.0 s   ·   Mots max (150 mots/min) : ≈ 11
+À l'écran : {{SCORE_1}}/{{SCORE_MAX}} {{SCORE_1_LABEL}} · {{SCORE_2}}/{{SCORE_MAX}} {{SCORE_2_LABEL}} · VERBATIM (6 s, son réel)
+Pas de voix off : 2:29.00 → 2:35.00
+Variables utilisables : {{SCORE_1}} {{SCORE_2}}
+Texte de voix off :
+[VO 08 — à compléter]
+
+=== SÉQUENCE 09 — Les conditions pour que ça dure — 2:35.00 → 2:47.00
+Durée : 12.0 s   ·   Mots max (150 mots/min) : ≈ 26
+À l'écran : Règles communes · Rôles clairs · Routines · guide
+Texte de voix off :
+[VO 09 — à compléter]
+
+=== SÉQUENCE 10 — Passer à l'échelle — 2:47.00 → 3:00.00
+Durée : 13.0 s   ·   Mots max (150 mots/min) : ≈ 28
+À l'écran : Répliquer · Faire vivre · Transmettre · question finale
+Texte de voix off :
+[VO 10 — à compléter]

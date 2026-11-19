@@ -1,0 +1,15 @@
+{
+  "name": "km-video",
+  "private": true,
+  "description": "Vidéo Knowledge Management — moteur de rendu déterministe (canvas → Playwright → ffmpeg)",
+  "scripts": {
+    "build": "bash tools/build_all.sh",
+    "render": "node tools/render.js",
+    "review": "bash tools/review.sh",
+    "audio": "python3 tools/audio.py",
+    "templates": "python3 tools/templates.py"
+  },
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

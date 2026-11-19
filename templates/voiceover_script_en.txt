@@ -1,0 +1,70 @@
+# VOICE-OVER TEMPLATE — 180 s — 150 wpm
+# Replace the brackets with your text. {{VARIABLES}} match config/texts.json.
+# After recording, put the real durations into config/timing.json, then rerun templates.py.
+
+=== SEQUENCE 01 — Why act? — 0:00.00 → 0:15.00
+Duration : 15.0 s   ·   Max words (150 wpm) : ≈ 33
+On screen : Knowledge · Know-how · {{EXPERIENCE_LABEL}} · two-part question
+Voice-over text :
+[VO 01 — to write]
+
+=== SEQUENCE 02 — Two kinds of knowledge — 0:15.00 → 0:27.00
+Duration : 12.0 s   ·   Max words (150 wpm) : ≈ 26
+On screen : Explicit / Tacit · “Our focus: tacit knowledge.”
+Voice-over text :
+[VO 02 — to write]
+
+=== SEQUENCE 03 — Identifying critical knowledge — 0:27.00 → 0:47.00
+Duration : 20.0 s   ·   Max words (150 wpm) : ≈ 46
+On screen : 2 challenges · 3 beams · {{DOMAIN_1}} / {{DOMAIN_2}}
+Usable variables : {{DOMAIN_1}} {{DOMAIN_2}}
+Voice-over text :
+[VO 03 — to write]
+
+=== SEQUENCE 04 — Making what matters explicit — 0:47.00 → 1:12.00
+Duration : 25.0 s   ·   Max words (150 wpm) : ≈ 28
+On screen : Struck-out bubble · interview guide · INTERVIEW EXCERPT (12 s, real audio)
+No voice-over : 0:59.20 → 1:11.20
+Voice-over text :
+[VO 04 — to write]
+
+=== SEQUENCE 05 — Turning speech into content — 1:12.00 → 1:30.00
+Duration : 18.0 s   ·   Max words (150 wpm) : ≈ 41
+On screen : Human review · Expert story · Playbook · {{DELIVERABLE_3}}
+Usable variables : {{DELIVERABLE_3}}
+Voice-over text :
+[VO 05 — to write]
+
+=== SEQUENCE 06 — An architecture built to be found — 1:30.00 → 1:50.00
+Duration : 20.0 s   ·   Max words (150 wpm) : ≈ 46
+On screen : Tree · Filtered views · Search · {{SITE_NAME}}
+Usable variables : {{SITE_NAME}}
+Voice-over text :
+[VO 06 — to write]
+
+=== SEQUENCE 07 — A journey that starts with a real question — 1:50.00 → 2:23.00
+Duration : 33.0 s   ·   Max words (150 wpm) : ≈ 78
+On screen : {{PERSONA}} · {{PERSONA_QUESTION}} · {{PLAYBOOK_EXCERPT}} · {{FOLLOW_UP_QUESTION}} · {{KEY_FACT_SUMMARY}}
+Usable variables : {{PERSONA}} {{PERSONA_QUESTION}} {{FOLLOW_UP_QUESTION}}
+Voice-over text :
+[VO 07 — to write]
+
+=== SEQUENCE 08 — What users say — 2:23.00 → 2:35.00
+Duration : 12.0 s   ·   Max words (150 wpm) : ≈ 11
+On screen : {{SCORE_1}}/{{SCORE_MAX}} {{SCORE_1_LABEL}} · {{SCORE_2}}/{{SCORE_MAX}} {{SCORE_2_LABEL}} · TESTIMONIAL (6 s, real audio)
+No voice-over : 2:29.00 → 2:35.00
+Usable variables : {{SCORE_1}} {{SCORE_2}}
+Voice-over text :
+[VO 08 — to write]
+
+=== SEQUENCE 09 — Conditions for it to last — 2:35.00 → 2:47.00
+Duration : 12.0 s   ·   Max words (150 wpm) : ≈ 26
+On screen : Shared rules · Clear roles · Routines · guide
+Voice-over text :
+[VO 09 — to write]
+
+=== SEQUENCE 10 — Scaling up — 2:47.00 → 3:00.00
+Duration : 13.0 s   ·   Max words (150 wpm) : ≈ 28
+On screen : Replicate · Keep it alive · Pass it on · final question
+Voice-over text :
+[VO 10 — to write]

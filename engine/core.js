@@ -199,20 +199,22 @@
     }
   };
 
+  // Grain adouci : bruit à demi-résolution (grain plus doux), renouvelé 12 fois/s
+  // au lieu de 60 (beaucoup moins coûteux à l'encodage), amplitude réduite.
   let GRAIN = null;
   E.grain = function (ctx, X) {
     if (!GRAIN) {
       GRAIN = [];
       for (let k = 0; k < 6; k++) {
-        const c = document.createElement('canvas'); c.width = W; c.height = H;
-        const g = c.getContext('2d'), id = g.createImageData(W, H), r = E.rng(1000 + k);
-        for (let i = 0; i < id.data.length; i += 4) { const v = 128 + (r() - 0.5) * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+        const c = document.createElement('canvas'); c.width = W / 2; c.height = H / 2;
+        const g = c.getContext('2d'), id = g.createImageData(W / 2, H / 2), r = E.rng(1000 + k);
+        for (let i = 0; i < id.data.length; i += 4) { const v = 128 + (r() - 0.5) * 200; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
         g.putImageData(id, 0, 0); GRAIN.push(c);
       }
     }
-    const fi = Math.round(X.t * X.fps) % 6;
-    ctx.save(); ctx.globalAlpha = X.S.grain * 3; ctx.globalCompositeOperation = 'overlay';
-    ctx.drawImage(GRAIN[fi], 0, 0); ctx.restore();
+    const fi = Math.floor(Math.round(X.t * X.fps) / Math.max(1, Math.round(X.fps / 12))) % 6;
+    ctx.save(); ctx.globalAlpha = X.S.grain * 2; ctx.globalCompositeOperation = 'overlay'; ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(GRAIN[fi], 0, 0, W, H); ctx.restore();
   };
 
   E.vignette = function (ctx, X) {
@@ -241,7 +243,7 @@
     let acc = 0; E.timeline = tm.sequences.map(s => { const o = { ...s, start: acc }; acc += s.dur; return o; });
     E.total = acc;
     const S = cfg.theme.styles[cfg.style || cfg.theme.selected || 'B_nuit'];
-    E.base = { S, B: cfg.theme.brand, T: cfg.texts, L: cfg.strings, placeholders: !!cfg.placeholders, beat: E.beat, fps: E.fps, total: E.total, logo: null };
+    E.base = { S, B: cfg.theme.brand, T: cfg.texts, L: cfg.strings, media: cfg.media || {}, placeholders: !!cfg.placeholders, beat: E.beat, fps: E.fps, total: E.total, logo: null };
     if (cfg.texts.CLIENT_LOGO) { const im = new Image(); im.src = cfg.texts.CLIENT_LOGO; E.logoReady = im.decode().then(() => { E.base.logo = im; }).catch(() => {}); }
     else E.logoReady = Promise.resolve();
   };
@@ -257,7 +259,7 @@
   // ---------------------------------------------------------------- seek(t)
   E.canvas = null; E.ctx = null;
   window.seek = function (t) {
-    const ctx = E.ctx;
+    const ctx = E.ctx; E.mediaWant = {};
     ctx.setTransform(E.px, 0, 0, E.px, 0, 0); ctx.filter = 'none'; ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
     t = E.clamp(t, 0, E.total - 1e-6);
     let i = E.timeline.findIndex(s => t >= s.start && t < s.start + s.dur); if (i < 0) i = E.timeline.length - 1;
