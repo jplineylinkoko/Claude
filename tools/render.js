@@ -62,7 +62,7 @@ function prepareMedia(cfg, schedule, tmp) {
 
 async function openPage(browser, cfg) {
   const page = await browser.newPage({ viewport: { width: Math.round(1920 * cfg.scale), height: Math.round(1080 * cfg.scale) } });
-  page.on('pageerror', e => { console.error('Erreur page :', e.message); process.exitCode = 1; });
+  page.on('pageerror', e => { console.error('Erreur page :', e.message); process.exit(1); });
   await page.addInitScript(c => { window.__CFG = c; }, cfg);
   await page.goto('file://' + path.join(ROOT, 'engine/index.html'));
   const info = await page.evaluate(() => window.boot());

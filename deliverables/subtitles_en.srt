@@ -1,0 +1,94 @@
+1
+00:00:00,300 --> 00:00:07,450
+[Seq. 1 — subtitle 1/2]
+[line 2, 42 characters max]
+
+2
+00:00:07,550 --> 00:00:14,700
+[Seq. 1 — subtitle 2/2]
+[line 2, 42 characters max]
+
+3
+00:00:15,300 --> 00:00:20,950
+[Seq. 2 — subtitle 1/2]
+[line 2, 42 characters max]
+
+4
+00:00:21,050 --> 00:00:26,700
+[Seq. 2 — subtitle 2/2]
+[line 2, 42 characters max]
+
+5
+00:00:27,300 --> 00:00:36,950
+[Seq. 3 — subtitle 1/2]
+[line 2, 42 characters max]
+
+6
+00:00:37,050 --> 00:00:46,700
+[Seq. 3 — subtitle 2/2]
+[line 2, 42 characters max]
+
+7
+00:00:47,300 --> 00:00:53,099
+[Seq. 4 — subtitle 1/2]
+[line 2, 42 characters max]
+
+8
+00:00:53,199 --> 00:00:58,998
+[Seq. 4 — subtitle 2/2]
+[line 2, 42 characters max]
+
+9
+00:01:12,300 --> 00:01:20,950
+[Seq. 5 — subtitle 1/2]
+[line 2, 42 characters max]
+
+10
+00:01:21,050 --> 00:01:29,700
+[Seq. 5 — subtitle 2/2]
+[line 2, 42 characters max]
+
+11
+00:01:30,300 --> 00:01:39,950
+[Seq. 6 — subtitle 1/2]
+[line 2, 42 characters max]
+
+12
+00:01:40,050 --> 00:01:49,700
+[Seq. 6 — subtitle 2/2]
+[line 2, 42 characters max]
+
+13
+00:01:50,300 --> 00:02:06,450
+[Seq. 7 — subtitle 1/2]
+{{PERSONA_QUESTION}}
+
+14
+00:02:06,550 --> 00:02:22,700
+[Seq. 7 — subtitle 2/2]
+{{FOLLOW_UP_QUESTION}}
+
+15
+00:02:23,300 --> 00:02:28,800
+[Seq. 8 — subtitle 1/1]
+[line 2, 42 characters max]
+
+16
+00:02:35,300 --> 00:02:40,950
+[Seq. 9 — subtitle 1/2]
+[line 2, 42 characters max]
+
+17
+00:02:41,050 --> 00:02:46,700
+[Seq. 9 — subtitle 2/2]
+[line 2, 42 characters max]
+
+18
+00:02:47,300 --> 00:02:53,450
+[Seq. 10 — subtitle 1/2]
+[line 2, 42 characters max]
+
+19
+00:02:53,550 --> 00:02:59,700
+[Seq. 10 — subtitle 2/2]
+[line 2, 42 characters max]

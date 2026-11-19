@@ -53,7 +53,8 @@
   // ---------------------------------------------------------------- texte
   // Retour à la ligne + réduction automatique. Renvoie {lines, size}
   E.fit = function (ctx, text, o) {
-    const { weight = 600, maxW = 1200, maxLines = 2, size = 72, minSize = 28, fam, track = 0 } = o;
+    const { weight = 600, maxW = 1200, maxLines = 2, fam, track = 0 } = o;
+    const minSize = Math.max(1, Math.min(o.minSize ?? 28, o.size ?? 72)), size = Math.max(minSize, o.size ?? 72);
     for (let s = size; s >= minSize; s -= 2) {
       ctx.font = E.font(weight, s, fam); ctx.letterSpacing = (track * s).toFixed(2) + 'px';
       const words = String(text).split(/\s+/).filter(Boolean), lines = []; let cur = '';

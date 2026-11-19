@@ -133,6 +133,7 @@
       for (let gx = x + w / 3; gx < x + w - 1; gx += w / 3) { ctx.beginPath(); ctx.moveTo(gx, y); ctx.lineTo(gx, y + h); ctx.stroke(); }
       for (let gy = y + h / 3; gy < y + h - 1; gy += h / 3) { ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x + w, gy); ctx.stroke(); }
       const sc = Math.min(1, w / 1000);
+      if (w > 160 && h > 90) {
       E.icon(ctx, 'film', x + w / 2 - 22 * sc * 1.6, y + h / 2 - 90 * sc, 44 * sc * 1.6, E.rgba('#FFFFFF', 0.7));
       ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'center';
       const f = E.fit(ctx, label, { weight: 600, size: Math.round(34 * sc), minSize: 12, maxW: w * 0.86, maxLines: 2, track: 0.08 });
@@ -142,6 +143,7 @@
         ctx.font = E.font(500, Math.max(12, Math.round(20 * sc))); ctx.letterSpacing = '2px'; ctx.fillStyle = E.rgba('#FFFFFF', 0.6);
         const tc = s => '00:' + String(Math.floor(E.clamp(s, 0, dur))).padStart(2, '0');
         ctx.fillText(`${tc(mt)} / ${tc(dur)}  ·  16:9`, x + w / 2, y + h / 2 + 10 * sc + f.lines.length * f.size * 1.25 + 26 * sc);
+      }
       }
       ctx.textAlign = 'left';
     }
