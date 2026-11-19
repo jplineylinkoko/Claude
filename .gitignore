@@ -6,3 +6,4 @@ render/
 styleframes/out/
 tests/*.png
 tests/media/
+previews/*.gif
